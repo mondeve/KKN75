@@ -54,9 +54,7 @@
     </div>
     <script type="text/javascript">
             var footer = [
-                { "jumlah": "Saldo Debet", "keterangan": 0 },
-                { "jumlah": "Saldo Kredit", "keterangan": 0 },
-                { "jumlah": "Selisih", "keterangan": 0 }
+                
             ];
             function saveUser() {
                 const row = {
@@ -75,6 +73,7 @@
 
                 // Tambahkan ke datagrid
                 $('#dg').datagrid('appendRow', row);
+                updateFooter();
 
                 // Kosongkan form setelah simpan
                 $('#tglbuku').datebox('clear');
@@ -86,6 +85,29 @@
                 $('#ket').textbox('clear');
             }
 
+            function updateFooter() {
+                const rows = $('#dg').datagrid('getRows');
+                let totalDebet = 0;
+                let totalKredit = 0;
+
+                rows.forEach(row => {
+                    const jumlah = parseFloat(row.jumlah) || 0;
+                    if (row.posisiTrx.toUpperCase() === 'D') {
+                        totalDebet += jumlah;
+                    } else if (row.posisiTrx.toUpperCase() === 'K') {
+                        totalKredit += jumlah;
+                    }
+                });
+
+                const selisih = totalDebet - totalKredit;
+
+                $('#dg').datagrid('reloadFooter', [
+                    { "jumlah": 'Saldo Debet', "keterangan": totalDebet },
+                    { "jumlah": 'Saldo Kredit', "keterangan": totalKredit },
+                    { "jumlah": 'Selisih', "keterangan": selisih }
+                ]);
+            }
+
             $(function () {
                 $('#dg').datagrid({
                     fitColumns: true,
@@ -93,8 +115,12 @@
                     rownumbers: true,
                     showFooter: true
                 });
-            $('#dg').datagrid('reloadFooter', footer);
-        });
+                $('#dg').datagrid('reloadFooter', [
+                    { "jumlah": "Saldo Debet", "keterangan": 0 },
+                    { "jumlah": "Saldo Kredit", "keterangan": 0 },
+                    { "jumlah": "Selisih", "keterangan": 0 }
+                ]);
+            });
     </script>
 </body>
 
