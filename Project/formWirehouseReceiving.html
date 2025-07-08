@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Wirehouse Receiving</title>
+
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">   
+    <script type="text/javascript" src="easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+    <style>
+        .form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .form-row label {
+            width: 150px; 
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        .form-row input,
+        .form-row select {
+            flex: 1; 
+            width: 40%; 
+        }
+    </style>
+</head>
+<body style="font-family: Arial, Helvetica, sans-serif;">
+    <h2>FORM WIREHOUSE RECEIVING SHEET</h2>
+	<div style="margin:20px 0 10px 0;"></div>
+	<div class="easyui-accordion" data-options="multiple:true" style="width:100%;">
+		<div title="Form Receiving" data-options="" style="overflow:auto;padding:10px;">
+			<form id="receiving" method="post" novalidate>
+                <div class="form-row">
+                    <label for="tanggalWRS" class="easyui-label">Tanggal WRS:</label>
+                    <input class="easyui-datebox" name="tanggalWRS" data-options="required:true">
+                </div>
+                <div class="form-row">
+                    <label for="NoDrafWRS" class="easyui-label">No Draf WRS:</label>
+                    <input class="easyui-textbox" name="NoDrafWRS" data-options="required:true">
+                </div>
+                <div class="form-row">
+                    <label for="nomorSuratJalan" class="easyui-label">Nomor Surat Jalan:</label>
+                    <input class="easyui-textbox" name="nomorSuratJalan" data-options="required:true">
+                </div>
+                <div class="form-row">
+                    <label for="supplier" class="easyui-label">Supplier:</label>
+                    <select class="easyui-combobox" name="supplier" data-options="labelPosition:'left',required:true">
+                        <option value="SZ">Suzuki</option>
+                        <option value="AN">Andora</option>
+                        <option value="HY">Hyundai</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="tanggalSuratJalan" class="easyui-label">Tanggal Surat Jalan:</label>
+                    <input class="easyui-datebox" name="tanggalSuratJalan" data-options="required:true">
+                </div>
+			</form>
+            <br>
+            <form id="orderPart" class="easyui-form" method="post" style="width:100%">
+                <table style="width:100%" border="0">
+                    <tr>
+                        <th>Nomor Order</th>
+                        <th>Nomor Part</th>
+                        <th>Keterangan</th>
+                        <th>Quantity DO</th>
+                        <th>Jumlah Terima</th>
+                        <th>Selisih</th>
+                        <th>Diskon</th>
+                        <th>Harga Beli</th>
+                        <th>Total Harga</th>
+                    </tr>
+                    <tr>
+                        <td><input class="easyui-textbox" name="noOrder" style="width:90%"></td>
+                        <td><input class="easyui-textbox" name="noPart" style="width:90%"></td>
+                        <td><input class="easyui-textbox" name="keterangan" style="width:90%"></td>
+                        <td><input class="easyui-textbox" name="qtyDo" style="width:90%" readonly></td> <!--qtyDo is read-only -->
+                        <td><input class="easyui-textbox" name="jmlTerima" style="width:90%"></td>
+                        <td><input class="easyui-textbox" name="selisih" style="width:90%"></td>
+                        <td><input class="easyui-textbox" name="diskon" style="width:90%"></td>
+                        <td><input class="easyui-textbox" name="hargaBeli" style="width:90%"></td>
+                        <td><input class="easyui-textbox" name="totalHarga" style="width:90%"></td>
+                    </tr>
+                </table>
+                <br>
+                <a href="#" class="easyui-linkbutton" iconCls="icon-ok" data-options="iconAlign:'right'" onclick="submitForm()">Submit</a> <!-- ada 2 form yang berbeda yaitu form receiving dan form orderPart -->
+            </form>
+		</div>
+			<table class="easyui-datagrid" title="Tabel Data" style="width:100%;height:350px" 
+                data-options="singleSelect:true,
+                collapsible:true,
+                url:'datagrid_data1.json',
+                method:'get',
+                labelWidth:120">
+                <thead>
+                    <tr>
+                        <th data-options="field:'noOrder',width:170">Nomor Order</th>
+                        <th data-options="field:'noPart',width:170">Nomor Part</th>
+                        <th data-options="field:'keterangan',width:170">Keterangan</th>
+                        <th data-options="field:'quantity',width:170">Quantity</th>
+                        <th data-options="field:'jmlTerima',width:170">Jumlah Terima</th>
+                        <th data-options="field:'selisih',width:170">Selisih</th>
+                        <th data-options="field:'diskon',width:170">Diskon</th>
+                        <th data-options="field:'hargaBeli',width:170">Harga Beli</th>
+                        <th data-options="field:'hargaJual',width:170">Harga Jual</th>
+                    </tr>
+                </thead>
+	        </table>
+	    </div>
+</body>
+</html>
