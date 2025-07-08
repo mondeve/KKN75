@@ -19,27 +19,24 @@
                     <input class="easyui-datebox" label="Tanggal Buku :" id="tglbuku" labelPosition="top" style="width: 100%;">
                     <input class="easyui-textbox" label="No. Bukti :" id="nobukti" labelPosition="top" style="width:100%;">
                     <input class="easyui-textbox" label="Nomor Perkiraan :" id="noperkiraan" labelPosition="top" style="width:100%;">
-                    <input class="easyui-textbox" name="Keterangan" id="ket" labelPosition="top" style="width:100%;height:150px"
-                        data-options="label:'Keterangan :',multiline:true">
-                        <select id="posisi" class="easyui-combobox" name="Posisi Transaksi" labelPosition="top"
-                            label="Posisi Transaksi :" style="width: 50%;">
-                            <option value="D">D</option>
-                            <option value="K">K</option>
-                        </select>
-                        <input class="easyui-datebox" id="tgltrx" label="Tanggal Transaksi :" labelPosition="top" style="width: 100%;">
-                        <input class="easyui-numberbox" id="jmlh" label="Jumlah :" labelPosition="top" style="width: 100%;">
-                        <div style="text-align: right; padding: 10px;">
+                    <input class="easyui-textbox" name="Keterangan" id="ket" labelPosition="top" style="width:100%;height:150px" data-options="label:'Keterangan :',multiline:true">
+                    <select id="posisi" class="easyui-combobox" name="Posisi Transaksi" labelPosition="top" label="Posisi Transaksi :" style="width: 50%;">
+                        <option value="D">D</option>
+                        <option value="K">K</option>
+                    </select>
+                    <input class="easyui-datebox" id="tgltrx" label="Tanggal Transaksi :" labelPosition="top" style="width: 100%;">
+                    <input class="easyui-numberbox" id="jmlh" label="Jumlah :" labelPosition="top" style="width: 100%;">
+                    <div style="text-align: right; padding: 10px;">
                         <a href="javascript:void(0)" class="easyui-linkbutton" style="padding: 10px;" onclick="saveUser()">OK</a>
                     </div>
                     </tr>
                 </div>
             </div>
             <div data-options="region:'center'">
-                <table id="dg" class="easyui-datagrid" style="width: 100%; max-width: 1200px;"
-                    data-options="method: 'get',fitColumns: true,singleSelect: true,rownumbers: true,showFooter: true">
+                <table id="dg" class="easyui-datagrid" style="width: 100%; max-width: 1200px;" data-options="method: 'get',fitColumns: true,singleSelect: true,rownumbers: true,showFooter: true">
                     <thead>
                         <tr>
-                            <th data-options="field:'tglTrx',width:100,halign:'center'">Tgl.Transaksi</th>
+                            <th data-options="field:'tglTrx',width:100,align:'center', halign:'center'">Tgl.Transaksi</th>
                             <th data-options="field:'noPerkiraan',width:100,halign:'center'">No.Perkiraan</th>
                             <th data-options="field:'posisiTrx',width:100,align:'center',halign:'center'">Posisi
                                 Transaksi</th>
@@ -49,6 +46,11 @@
                         </tr>
                     </thead>
                 </table>
+                <!-- Tombol SUBMIT dan DELETE -->
+                <div style="text-align: right; padding: 10px;">
+                <a href="javascript:void(0)" class="easyui-linkbutton" style="padding: 10px;" onclick="">Submit</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" style="padding: 10px; background-color: #f44336;" onclick="deleteRow()">Delete</a>
+                </div>
             </div>
         </div>
     </div>
@@ -106,6 +108,17 @@
                     { "jumlah": 'Saldo Kredit', "keterangan": totalKredit },
                     { "jumlah": 'Selisih', "keterangan": selisih }
                 ]);
+            }
+
+            function deleteRow() {
+                const row = $('#dg').datagrid('getSelected');
+                const index = $('#dg').datagrid('getRowIndex', row);
+                if (index >= 0) {
+                    $('#dg').datagrid('deleteRow', index);
+                    updateFooter();
+                } else {
+                    $.messager.alert('Peringatan', 'Pilih baris yang ingin dihapus.', 'warning');
+                }
             }
 
             $(function () {
