@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../EasyUi-JQuery/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../EasyUi-JQuery/themes/icon.css">
+    <script type="text/javascript" src="../EasyUi-JQuery/jquery.min.js"></script>
+    <script type="text/javascript" src="../EasyUi-JQuery/jquery.easyui.min.js"></script>
+</head>
+
+<body class="easyui-layout">
+    <div data-options="region:'center',title:'Jurnal Transaction'">
+        <div class="easyui-layout" data-options="fit:true">
+            <div data-options="region:'west',split:true" style="width:30%;padding:10px">
+                <div id="fm" method="post" style="width: 100%; max-width: 1200px; display: flex; flex-direction: column;">
+                    <input class="easyui-datebox" label="Tanggal Buku :" id="tglbuku" labelPosition="top" style="width: 100%;">
+                    <input class="easyui-textbox" label="No. Bukti :" id="nobukti" labelPosition="top" style="width:100%;">
+                    <input class="easyui-textbox" label="Nomor Perkiraan :" id="noperkiraan" labelPosition="top" style="width:100%;">
+                    <input class="easyui-textbox" name="Keterangan" id="ket" labelPosition="top" style="width:100%;height:150px"
+                        data-options="label:'Keterangan :',multiline:true">
+                        <select id="posisi" class="easyui-combobox" name="Posisi Transaksi" labelPosition="top"
+                            label="Posisi Transaksi :" style="width: 50%;">
+                            <option value="D">D</option>
+                            <option value="K">K</option>
+                        </select>
+                        <input class="easyui-datebox" id="tgltrx" label="Tanggal Transaksi :" labelPosition="top" style="width: 100%;">
+                        <input class="easyui-numberbox" id="jmlh" label="Jumlah :" labelPosition="top" style="width: 100%;">
+                        <div style="text-align: right; padding: 10px;">
+                        <a href="javascript:void(0)" class="easyui-linkbutton" style="padding: 10px;" onclick="saveUser()">OK</a>
+                    </div>
+                    </tr>
+                </div>
+            </div>
+            <div data-options="region:'center'">
+                <table id="dg" class="easyui-datagrid" style="width: 100%; max-width: 1200px;"
+                    data-options="method: 'get',fitColumns: true,singleSelect: true,rownumbers: true,showFooter: true">
+                    <thead>
+                        <tr>
+                            <th data-options="field:'tglTrx',width:100,halign:'center'">Tgl.Transaksi</th>
+                            <th data-options="field:'noPerkiraan',width:100,halign:'center'">No.Perkiraan</th>
+                            <th data-options="field:'posisiTrx',width:100,align:'center',halign:'center'">Posisi
+                                Transaksi</th>
+                            <th data-options="field:'jumlah',width:100,align:'right',halign:'center'">Jumlah
+                            </th>
+                            <th data-options="field:'keterangan',width:250,halign:'center'">Keterangan</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+            var footer = [
+                { "jumlah": "Saldo Debet", "keterangan": 0 },
+                { "jumlah": "Saldo Kredit", "keterangan": 0 },
+                { "jumlah": "Selisih", "keterangan": 0 }
+            ];
+            function saveUser() {
+                const row = {
+                    tglTrx: $('#tgltrx').datebox('getValue'),
+                    noPerkiraan: $('#noperkiraan').textbox('getValue'),
+                    posisiTrx: $('#posisi').combobox('getValue'),
+                    jumlah: $('#jmlh').numberbox('getValue'),
+                    keterangan: $('#ket').textbox('getValue')
+                };
+
+                // Validasi sederhana
+                if (!row.tglTrx || !row.noPerkiraan || !row.jumlah || !row.posisiTrx) {
+                    $.messager.alert('Error', 'Mohon lengkapi semua field yang wajib.', 'error');
+                    return;
+                }
+
+                // Tambahkan ke datagrid
+                $('#dg').datagrid('appendRow', row);
+
+                // Kosongkan form setelah simpan
+                $('#tglbuku').datebox('clear');
+                $('#nobukti').textbox('clear');
+                $('#tgltrx').datebox('clear');
+                $('#noperkiraan').textbox('clear');
+                $('#posisi').combobox('clear');
+                $('#jmlh').numberbox('clear');
+                $('#ket').textbox('clear');
+            }
+
+            $(function () {
+                $('#dg').datagrid({
+                    fitColumns: true,
+                    singleSelect: true,
+                    rownumbers: true,
+                    showFooter: true
+                });
+            $('#dg').datagrid('reloadFooter', footer);
+        });
+    </script>
+</body>
+
+</html>

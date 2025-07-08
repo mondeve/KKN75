@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Penerimaan Unit</title>
+    <link rel="stylesheet" type="text/css" href="../EasyUi-JQuery/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../EasyUi-JQuery/themes/icon.css">
+    <script type="text/javascript" src="../EasyUi-JQuery/jquery.min.js"></script>
+    <script type="text/javascript" src="../EasyUi-JQuery/jquery.easyui.min.js"></script>
+</head>
+
+<body class="easyui-layout" style="margin: auto;">
+    <div data-options="region: 'center', split:true " style=" width: 100%;" title='Form Penerimaan Unit'">
+        <table style=" width: 100%;">
+        <tr>
+            <td style="width: 50%; padding: 10px;">
+                <input class="easyui-datebox" label="Tanggal Entry :" labelPosition="top"">
+            </td>
+            <td style=" width: 50%; padding: 10px;"">
+                <select class=" easyui-combobox" name="Supplier" labelPosition="top" label="Supplier :"
+                    style="width: 50%;">
+                    <option value="#">##</option>
+                    <option value="#">##</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 50%; padding: 10px;">
+                <input class="easyui-datebox" label="Tanggal Surat Jalan :" labelPosition="top" style="width: 100%;">
+            </td>
+            <td style="width: 50%; padding: 10px;">
+                <select class="easyui-combobox" name="gudang penerima" labelPosition="top" label="Gudang Penerima :"
+                    style="width: 100%;">
+                    <option value="##">###</option>
+                    <option value="##">####</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 50%; padding: 10px;">
+                <input class="easyui-textbox" label="No. Surat Jalan :" labelPosition="top" style="width:100%;">
+            </td>
+            <td style="width: 50%; padding: 10px; vertical-align: top;">
+                <input class="easyui-textbox" label="Gudang pengirim :" labelPosition="top" style="width:100%;">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: right; padding: 10px;">
+                <a href="#" class="easyui-linkbutton" style="padding: 10px;">OK</a>
+            </td>
+        </tr>
+        </table>
+        <table id="dg" class="easyui-datagrid"
+            data-options="url: '#',method: 'get',fitColumns: true,rownumbers: true,showFooter: true"
+            style=" width: 100%;">
+            <thead>
+                <tr>
+                    <th data-options="field:'no.rangka',width:100,halign:'center',editor:'text'">No. Rangka</th>
+                    <th data-options="field:'no.mesin',width:100,halign:'center',editor:'text'">No.Mesin</th>
+                    <th data-options="field:'typeunit',width:100,align:'right',halign:'center',editor:'text'">Type Unit
+                    </th>
+                    <th data-options="field:'warna',width:100,align:'right',halign:'center',editor:'text'">Warna</th>
+                    <th data-options="field:'tgl.do',width:100,halign:'center',editor:'text'">Tgl. DO</th>
+                    <th data-options="field:'no.do',width:100,halign:'center',editor:'text'">NO. DO</th>
+                    <th data-options="field:'hpp',width:100,halign:'center',editor:'text'">HPP</th>
+                    <th data-options="field:'vin',width:100,halign:'center',editor:'text'">VIN</th>
+                    <th data-options="field:'thnproduksi',width:100,halign:'center',editor:'text'">Tahun Produksi</th>
+                </tr>
+            </thead>
+        </table>
+        <div style="text-align: end;">
+            <a href="#" class="easyui-linkbutton" style="padding: 10px; margin-top: 12px;">Submit</a>
+        </div>
+        <script type="text/javascript">
+            var data = [
+                { "no.rangka": "FI-SW-01", "no.mesin": "Koi", "typeunit": 10.00, "warna": "P", "tgl.do": 36.50, "attr1": "Large", "itemid": "EST-1" },
+                { "no.rangka": "K9-DL-01", "productname": "Dalmation", "unitcost": 12.00, "status": "P", "listprice": 18.50, "attr1": "Spotted Adult Female", "itemid": "EST-10" },
+                { "no.rangka": "RP-SN-01", "productname": "Rattlesnake", "unitcost": 12.00, "status": "P", "listprice": 38.50, "attr1": "Venomless", "itemid": "EST-11" },
+                { "no.rangka": "RP-SN-01", "productname": "Rattlesnake", "unitcost": 12.00, "status": "N", "listprice": 26.50, "attr1": "Rattleless", "itemid": "EST-12" },
+                { "no.rangka": "RP-LI-02", "productname": "Iguana", "unitcost": 12.00, "status": "N", "listprice": 35.50, "attr1": "Green Adult", "itemid": "EST-13" },
+                { "no.rangka": "FL-DSH-01", "productname": "Manx", "unitcost": 12.00, "status": "P", "listprice": 158.50, "attr1": "Tailless", "itemid": "EST-14" },
+                { "no.rangka": "FL-DSH-01", "productname": "Manx", "unitcost": 12.00, "status": "P", "listprice": 83.50, "attr1": "With tail", "itemid": "EST-15" },
+                { "no.rangka": "FL-DLH-02", "productname": "Persian", "unitcost": 12.00, "status": "N", "listprice": 23.50, "attr1": "Adult Female", "itemid": "EST-16" },
+                { "no.rangka": "FL-DLH-02", "productname": "Persian", "unitcost": 12.00, "status": "P", "listprice": 89.50, "attr1": "Adult Male", "itemid": "EST-17" },
+                { "no.rangka": "AV-CB-01", "productname": "Amazon Parrot", "unitcost": 92.00, "status": "N", "listprice": 63.50, "attr1": "Adult Male", "itemid": "EST-18" }
+            ];
+            var footer = [
+                { "vin": "", "totalharga": 0 }
+            ];
+            $(function () {
+                $('#dg').datagrid({
+                    data: data
+                });
+                $('#dg').datagrid('reloadFooter', footer);
+            });
+        </script>
+    </div>
+
+    
+</body>
+
+</html>
