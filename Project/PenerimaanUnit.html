@@ -4,101 +4,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Penerimaan Unit</title>
+    <title>Document</title>
     <link rel="stylesheet" type="text/css" href="../EasyUi-JQuery/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css" href="../EasyUi-JQuery/themes/icon.css">
     <script type="text/javascript" src="../EasyUi-JQuery/jquery.min.js"></script>
     <script type="text/javascript" src="../EasyUi-JQuery/jquery.easyui.min.js"></script>
 </head>
 
-<body class="easyui-layout" style="margin: auto;">
-    <div data-options="region: 'center', split:true " style=" width: 100%;" title='Form Penerimaan Unit'">
-        <table style=" width: 100%;">
-        <tr>
-            <td style="width: 50%; padding: 10px;">
-                <input class="easyui-datebox" label="Tanggal Entry :" labelPosition="top"">
-            </td>
-            <td style=" width: 50%; padding: 10px;"">
-                <select class=" easyui-combobox" name="Supplier" labelPosition="top" label="Supplier :"
-                    style="width: 50%;">
-                    <option value="#">##</option>
-                    <option value="#">##</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td style="width: 50%; padding: 10px;">
-                <input class="easyui-datebox" label="Tanggal Surat Jalan :" labelPosition="top" style="width: 100%;">
-            </td>
-            <td style="width: 50%; padding: 10px;">
-                <select class="easyui-combobox" name="gudang penerima" labelPosition="top" label="Gudang Penerima :"
-                    style="width: 100%;">
-                    <option value="##">###</option>
-                    <option value="##">####</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td style="width: 50%; padding: 10px;">
-                <input class="easyui-textbox" label="No. Surat Jalan :" labelPosition="top" style="width:100%;">
-            </td>
-            <td style="width: 50%; padding: 10px; vertical-align: top;">
-                <input class="easyui-textbox" label="Gudang pengirim :" labelPosition="top" style="width:100%;">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="text-align: right; padding: 10px;">
-                <a href="#" class="easyui-linkbutton" style="padding: 10px;">OK</a>
-            </td>
-        </tr>
-        </table>
-        <table id="dg" class="easyui-datagrid"
-            data-options="url: '#',method: 'get',fitColumns: true,rownumbers: true,showFooter: true"
-            style=" width: 100%;">
-            <thead>
-                <tr>
-                    <th data-options="field:'no.rangka',width:100,halign:'center',editor:'text'">No. Rangka</th>
-                    <th data-options="field:'no.mesin',width:100,halign:'center',editor:'text'">No.Mesin</th>
-                    <th data-options="field:'typeunit',width:100,align:'right',halign:'center',editor:'text'">Type Unit
-                    </th>
-                    <th data-options="field:'warna',width:100,align:'right',halign:'center',editor:'text'">Warna</th>
-                    <th data-options="field:'tgl.do',width:100,halign:'center',editor:'text'">Tgl. DO</th>
-                    <th data-options="field:'no.do',width:100,halign:'center',editor:'text'">NO. DO</th>
-                    <th data-options="field:'hpp',width:100,halign:'center',editor:'text'">HPP</th>
-                    <th data-options="field:'vin',width:100,halign:'center',editor:'text'">VIN</th>
-                    <th data-options="field:'thnproduksi',width:100,halign:'center',editor:'text'">Tahun Produksi</th>
-                </tr>
-            </thead>
-        </table>
-        <div style="text-align: end;">
-            <a href="#" class="easyui-linkbutton" style="padding: 10px; margin-top: 12px;">Submit</a>
+<body class="easyui-layout">
+    <div data-options="region:'center',title:'Form Penerimaan Unit'">
+        <div class="easyui-layout" data-options="fit:true">
+            <div data-options="region:'west',split:true" title="Input form" style="width:25%;padding:10px">
+                <div id="fm1" method="post" style="width: 100%; display: flex; flex-direction: column;">
+
+                    <input class="easyui-textbox" label="No. Rangka :" id="norangka" labelPosition="top" style="width: 100%;">
+                    <input class="easyui-textbox" label="No. Mesin :" id="nomesin" labelPosition="top" style="width:100%;">
+                    <input class="easyui-textbox" label="Type Unit :" id="typeunit" labelPosition="top" style="width:100%;">
+                    <input class="easyui-textbox" label="Warana :" id="warna" labelPosition="top" style="width:100%;">
+                    <input class="easyui-datebox" label="Tanggal DO :" id="tgldo" labelPosition="top" style="width:100%;">
+                    <input class="easyui-textbox" label="No. DO :" id="nodo" labelPosition="top" style="width:100%;">
+                    <input class="easyui-textbox" label="HPP :" id="hpp1" labelPosition="top" style="width:100%;">
+                    <input class="easyui-textbox" label="VIN :" id="vin1" labelPosition="top" style="width:100%;">
+                    <input class="easyui-textbox" label="Tahun Produksi :" id="thnproduksi" labelPosition="top" style="width:100%;">
+
+                    <div style="text-align: right; padding: 10px;">
+                        <a href="javascript:void(0)" class="easyui-linkbutton" style="padding: 10px;" onclick="save()">OK</a>
+                    </div>
+                    </tr>
+                </div>
+            </div>
+            <div data-options="region:'center'">
+                <div id="toolbar" style="padding: 8px; width: 100%;">
+                    <div id="fm2" method="post" style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 10px;">
+
+                        <!-- Kolom 1 -->
+                        <div style="flex: none; width: fit-content; min-width: 250px; display: flex; flex-direction: column; gap: 10px;">
+                            <input class="easyui-datebox"
+                                label="Tanggal Entry :"
+                                id="tglentry"
+                                labelPosition="top"
+                                style="width: 100%;">
+                            <select id="supplier"
+                                    class="easyui-combobox"
+                                    name="Supplier"
+                                    labelPosition="top"
+                                    label="Supplier :"
+                                    style="width: 100%;">
+                                <option value="##">##</option>
+                                <option value="###">###</option>
+                            </select>
+                        </div>
+
+                        <!-- Kolom 2 -->
+                        <div style="flex: none; width: fit-content; min-width: 250px; display: flex; flex-direction: column; gap: 10px;">
+                            <input class="easyui-datebox"
+                                label="Tanggal Surat Jalan :"
+                                id="tglsuratjln"
+                                labelPosition="top"
+                                style="width: 100%;">
+
+                            <select id="gdpenerima"
+                                    class="easyui-combobox"
+                                    name="Gudang Penerima"
+                                    labelPosition="top"
+                                    label="Gudang Penerima :"
+                                    style="width: 100%;">
+                                <option value="##">##</option>
+                                <option value="###">###</option>
+                            </select>
+                        </div>
+
+                        <!-- Kolom 3 -->
+                        <div style="flex: none; width: fit-content; min-width: 250px; display: flex; flex-direction: column; gap: 10px;">
+                            <input class="easyui-textbox"
+                                label="Nomor Surat Jalan :"
+                                id="nosuratjln"
+                                labelPosition="top"
+                                style="width: 100%;">                            
+
+                            <input class="easyui-textbox"
+                                label="Gudang Pengirim :"
+                                id="gdgpengirim"
+                                labelPosition="top"
+                                style="width: 100%;">
+                        </div>
+                    </div>
+
+                    <a href="javascript:void(0)" class="easyui-linkbutton" style="padding: 10px;" onclick="saveEdit()">Save Edit</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" style="padding: 10px; background-color: #f44336;" onclick="deleteRow()">Delete</a>
+                </div>
+
+                <table toolbar="#toolbar" id="dg" class="easyui-datagrid" style="width: 100%;" data-options="method: 'get',fitColumns: true,singleSelect: true,rownumbers: true,showFooter: true">
+                    <thead>
+                        <tr>
+                            <th data-options="field:'noRangka',width:100,align:'center', halign:'center', editor:'textbox'">No. Rangka</th>
+                            <th data-options="field:'noMesin',width:100,halign:'center',editor:'textbox'">No.Mesin</th>
+                            <th data-options="field:'typeUnit',width:100,halign:'center',editor:'textbox'">Type Unit</th>
+                            <th data-options="field:'color',width:100,halign:'center',editor:'textbox'">Warna</th>
+                            <th data-options="field:'tglDo',width:100,halign:'center',editor:'datebox'">Tanggal DO</th>
+                            <th data-options="field:'noDo',width:100,halign:'center',editor:'textbox'">No. DO</th>
+                            <th data-options="field:'hpp2',width:100,halign:'center',editor:'textbox'">HPP</th>
+                            <th data-options="field:'vin2',width:100,halign:'center',editor:'textbox'">VIN</th>
+                            <th data-options="field:'thnProduksi',width:100,halign:'center',editor:'textbox'">Tahun Produksi</th>
+                        </tr>
+                    </thead>
+                </table>
+                
+                <p style="font-size: 12px; padding-left: 8px; color: #888;">Double klik pada baris untuk mengedit.</p>
+                
+                <div style="text-align: right; padding: 10px;">
+                    <a href="javascript:void(0)" class="easyui-linkbutton" style="padding: 10px;" onclick="">Submit</a>
+                </div>
+            </div>
         </div>
-        <script type="text/javascript">
-            var data = [
-                { "no.rangka": "FI-SW-01", "no.mesin": "Koi", "typeunit": 10.00, "warna": "P", "tgl.do": 36.50, "attr1": "Large", "itemid": "EST-1" },
-                { "no.rangka": "K9-DL-01", "productname": "Dalmation", "unitcost": 12.00, "status": "P", "listprice": 18.50, "attr1": "Spotted Adult Female", "itemid": "EST-10" },
-                { "no.rangka": "RP-SN-01", "productname": "Rattlesnake", "unitcost": 12.00, "status": "P", "listprice": 38.50, "attr1": "Venomless", "itemid": "EST-11" },
-                { "no.rangka": "RP-SN-01", "productname": "Rattlesnake", "unitcost": 12.00, "status": "N", "listprice": 26.50, "attr1": "Rattleless", "itemid": "EST-12" },
-                { "no.rangka": "RP-LI-02", "productname": "Iguana", "unitcost": 12.00, "status": "N", "listprice": 35.50, "attr1": "Green Adult", "itemid": "EST-13" },
-                { "no.rangka": "FL-DSH-01", "productname": "Manx", "unitcost": 12.00, "status": "P", "listprice": 158.50, "attr1": "Tailless", "itemid": "EST-14" },
-                { "no.rangka": "FL-DSH-01", "productname": "Manx", "unitcost": 12.00, "status": "P", "listprice": 83.50, "attr1": "With tail", "itemid": "EST-15" },
-                { "no.rangka": "FL-DLH-02", "productname": "Persian", "unitcost": 12.00, "status": "N", "listprice": 23.50, "attr1": "Adult Female", "itemid": "EST-16" },
-                { "no.rangka": "FL-DLH-02", "productname": "Persian", "unitcost": 12.00, "status": "P", "listprice": 89.50, "attr1": "Adult Male", "itemid": "EST-17" },
-                { "no.rangka": "AV-CB-01", "productname": "Amazon Parrot", "unitcost": 92.00, "status": "N", "listprice": 63.50, "attr1": "Adult Male", "itemid": "EST-18" }
-            ];
-            var footer = [
-                { "vin": "", "totalharga": 0 }
-            ];
+    </div>
+    <script type="text/javascript">
+            
+            var editIndex = undefined;
+            function endEditing(){
+                if (editIndex == undefined){return true}
+                if ($('#dg').datagrid('validateRow', editIndex)){
+                    $('#dg').datagrid('endEdit', editIndex);
+                    editIndex = undefined;
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function onDblClickRow(index, row) {
+                if (editIndex !== index) {
+                    if (endEditing()) {
+                        $('#dg').datagrid('selectRow', index).datagrid('beginEdit', index);
+                        editIndex = index;
+                    } else {
+                        setTimeout(() => {
+                            $('#dg').datagrid('selectRow', editIndex);
+                        }, 0);
+                    }
+                }
+            }
+
+
+            function saveEdit() {
+                if (editIndex === undefined) {
+                    $.messager.alert('Info', 'Tidak ada baris yang sedang diedit.', 'info');
+                    return;
+                }
+
+                // ...lanjutan seperti biasa...
+                if (endEditing()) {
+                    // updateFooter();
+                    $.messager.show({ title: 'Sukses', msg: 'Perubahan berhasil disimpan.' });
+                }
+            }
+
+
+            function onEndEdit(index, row){
+                var ed = $(this).datagrid('getEditor', {
+                    index: index,
+                    field: 'productid'
+                });
+                row.productname = $(ed.target).combobox('getText');
+            }
+
+            function save() {
+                const row = {
+                    noRangka: $('#norangka').textbox('getValue'),
+                    noMesin: $('#nomesin').textbox('getValue'),
+                    typeUnit: $('#typeunit').textbox('getValue'),
+                    color: $('#warna').textbox('getValue'),
+                    tglDo: $('#tgldo').datebox('getValue'),
+                    noDo: $('#nodo').textbox('getValue'),
+                    hpp2: $('#hpp1').textbox('getValue'),
+                    vin2: $('#vin1').textbox('getValue'),
+                    thnProduksi: $('#thnproduksi').textbox('getValue')
+                };
+
+                // Validasi sederhana
+                if (!row.typeUnit || !row.noRangka || !row.noMesin || !row.thnProduksi) {
+                    $.messager.alert('Error', 'Mohon lengkapi semua field yang wajib.', 'error');
+                    return;
+                }
+
+                // Tambahkan ke datagrid
+                $('#dg').datagrid('appendRow', row);
+                // updateFooter();
+
+                // Kosongkan form setelah simpan
+                $('#norangka').textbox('clear');
+                $('#nomesin').textbox('clear');
+                $('#typeunit').textbox('clear');
+                $('#warna').textbox('clear');
+                $('#tgldo').datebox('clear');
+                $('#nodo').textbox('clear');
+                $('#hpp').textbox('clear');
+                $('#vin').textbox('clear');
+                $('#tglproduksi').textbox('clear');
+            }
+
+            // fungsi footer  jumlah unit dan total harga belum klear
+            
+            // function updateFooter() {
+            //     const rows = $('#dg').datagrid('getRows');
+            //     let totalDebet = 0;
+            //     let totalKredit = 0;
+
+            //     rows.forEach(row => {
+            //         const jumlah = parseFloat(row.jumlah) || 0;
+            //         if (row.posisiTrx.toUpperCase() === 'D') {
+            //             totalDebet += jumlah;
+            //         } else if (row.posisiTrx.toUpperCase() === 'K') {
+            //             totalKredit += jumlah;
+            //         }
+            //     });
+
+            //     const selisih = totalDebet - totalKredit;
+
+                // $('#dg').datagrid('reloadFooter', [
+                //     { "vin": "Jumlah Unit", "thnProduksi":  },
+                //     { "vin": "Total Harga", "thnProduksi":  }
+                // ]);
+            // }
+
+            function deleteRow() {
+                const row = $('#dg').datagrid('getSelected');
+                const index = $('#dg').datagrid('getRowIndex', row);
+                if (index >= 0) {
+                    $('#dg').datagrid('deleteRow', index);
+                    updateFooter();
+                } else {
+                    $.messager.alert('Peringatan', 'Pilih baris yang ingin dihapus.', 'warning');
+                }
+            }
+
             $(function () {
                 $('#dg').datagrid({
-                    data: data
+                    fitColumns: true,
+                    singleSelect: true,
+                    rownumbers: true,
+                    showFooter: true,
+                    onDblClickRow: onDblClickRow
                 });
-                $('#dg').datagrid('reloadFooter', footer);
+                console.log($('#dg').datagrid('getRows'));
+                $('#dg').datagrid('reloadFooter', [
+                    { "vin2": "Jumlah Unit", "thnProduksi": 0 },
+                    { "vin2": "Total Harga", "thnProduksi": 0 }
+                ]);
             });
-        </script>
-    </div>
-
-    
+    </script>
 </body>
 
 </html>
