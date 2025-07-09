@@ -27,38 +27,87 @@
                     <input class="easyui-datebox" id="tgltrx" label="Tanggal Transaksi :" labelPosition="top" style="width: 100%;">
                     <input class="easyui-numberbox" id="jmlh" label="Jumlah :" labelPosition="top" style="width: 100%;">
                     <div style="text-align: right; padding: 10px;">
-                        <a href="javascript:void(0)" class="easyui-linkbutton" style="padding: 10px;" onclick="saveUser()">OK</a>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" style="padding: 10px;" onclick="save()">OK</a>
                     </div>
                     </tr>
                 </div>
             </div>
             <div data-options="region:'center'">
-                <table id="dg" class="easyui-datagrid" style="width: 100%; max-width: 1200px;" data-options="method: 'get',fitColumns: true,singleSelect: true,rownumbers: true,showFooter: true">
+                <table toolbar="#toolbar" id="dg" class="easyui-datagrid" style="width: 100%; max-width: 1200px;" data-options="method: 'get',fitColumns: true,singleSelect: true,rownumbers: true,showFooter: true">
                     <thead>
                         <tr>
-                            <th data-options="field:'tglTrx',width:100,align:'center', halign:'center'">Tgl.Transaksi</th>
-                            <th data-options="field:'noPerkiraan',width:100,halign:'center'">No.Perkiraan</th>
-                            <th data-options="field:'posisiTrx',width:100,align:'center',halign:'center'">Posisi
+                            <th data-options="field:'tglTrx',width:100,align:'center', halign:'center', editor:'datebox'">Tgl.Transaksi</th>
+                            <th data-options="field:'noPerkiraan',width:100,halign:'center',editor:'textbox'">No.Perkiraan</th>
+                            <th data-options="field:'posisiTrx',width:100,align:'center',halign:'center',editor:{type:'combobox',options:{valueField:'value',textField:'text',data:[{value:'D',text:'D'},{value:'K',text:'K'}]}}">Posisi
                                 Transaksi</th>
-                            <th data-options="field:'jumlah',width:100,align:'right',halign:'center'">Jumlah
+                            <th data-options="field:'jumlah',width:100,align:'right',halign:'center',editor:'numberbox'">Jumlah
                             </th>
-                            <th data-options="field:'keterangan',width:250,halign:'center'">Keterangan</th>
+                            <th data-options="field:'keterangan',width:250,halign:'center',editor:'textbox'">Keterangan</th>
                         </tr>
                     </thead>
                 </table>
-                <!-- Tombol SUBMIT dan DELETE -->
+                <div id="toolbar" style="padding: 8px;" >
+                    <a href="javascript:void(0)" class="easyui-linkbutton" style="padding: 10px;" onclick="saveEdit()">Save Edit</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" style="padding: 10px; background-color: #f44336;" onclick="deleteRow()">Delete</a>
+                </div>
+                <p style="font-size: 12px; color: #888;">Double klik pada baris untuk mengedit.</p>
                 <div style="text-align: right; padding: 10px;">
-                <a href="javascript:void(0)" class="easyui-linkbutton" style="padding: 10px;" onclick="">Submit</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" style="padding: 10px; background-color: #f44336;" onclick="deleteRow()">Delete</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" style="padding: 10px;" onclick="">Submit</a>
                 </div>
             </div>
         </div>
     </div>
     <script type="text/javascript">
-            var footer = [
-                
-            ];
-            function saveUser() {
+            
+            var editIndex = undefined;
+            function endEditing(){
+                if (editIndex == undefined){return true}
+                if ($('#dg').datagrid('validateRow', editIndex)){
+                    $('#dg').datagrid('endEdit', editIndex);
+                    editIndex = undefined;
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function onDblClickRow(index, row) {
+                if (editIndex !== index) {
+                    if (endEditing()) {
+                        $('#dg').datagrid('selectRow', index).datagrid('beginEdit', index);
+                        editIndex = index;
+                    } else {
+                        setTimeout(() => {
+                            $('#dg').datagrid('selectRow', editIndex);
+                        }, 0);
+                    }
+                }
+            }
+
+
+            function saveEdit() {
+                if (editIndex === undefined) {
+                    $.messager.alert('Info', 'Tidak ada baris yang sedang diedit.', 'info');
+                    return;
+                }
+
+                // ...lanjutan seperti biasa...
+                if (endEditing()) {
+                    updateFooter();
+                    $.messager.show({ title: 'Sukses', msg: 'Perubahan berhasil disimpan.' });
+                }
+            }
+
+
+            function onEndEdit(index, row){
+                var ed = $(this).datagrid('getEditor', {
+                    index: index,
+                    field: 'productid'
+                });
+                row.productname = $(ed.target).combobox('getText');
+            }
+
+            function save() {
                 const row = {
                     tglTrx: $('#tgltrx').datebox('getValue'),
                     noPerkiraan: $('#noperkiraan').textbox('getValue'),
@@ -126,7 +175,8 @@
                     fitColumns: true,
                     singleSelect: true,
                     rownumbers: true,
-                    showFooter: true
+                    showFooter: true,
+                    onDblClickRow: onDblClickRow
                 });
                 $('#dg').datagrid('reloadFooter', [
                     { "jumlah": "Saldo Debet", "keterangan": 0 },
